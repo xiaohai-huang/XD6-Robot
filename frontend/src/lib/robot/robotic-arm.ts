@@ -54,7 +54,7 @@ interface Arm {
 export default class RoboticArm implements Arm {
 	private _serial: WebSerial;
 	private _moveDuration: number;
-	private _accleration: number;
+	private _acceleration: number;
 
 	private _eventListeners: Map<keyof RoboticArmEventMap, Set<Function>> =
 		new Map();
@@ -62,7 +62,7 @@ export default class RoboticArm implements Arm {
 	constructor(serial: WebSerial) {
 		this._serial = serial;
 		this._moveDuration = 2;
-		this._accleration = 0.4;
+		this._acceleration = 0.4;
 	}
 
 	static create(): RoboticArm {
@@ -217,7 +217,7 @@ export default class RoboticArm implements Arm {
 			joint5Degree,
 			joint6Degree,
 			this._moveDuration,
-			this._accleration,
+			this._acceleration,
 		);
 		let success = true;
 		await this._serial
@@ -237,7 +237,7 @@ export default class RoboticArm implements Arm {
 			jointNum,
 			targetDegree,
 			this._moveDuration,
-			this._accleration,
+			this._acceleration,
 		);
 		await this._serial
 			.listenFor(`MOVE_JOINT ${jointNum} COMPLETE`, 20)
@@ -257,7 +257,7 @@ export default class RoboticArm implements Arm {
 			jointNum,
 			degree,
 			this._moveDuration,
-			this._accleration,
+			this._acceleration,
 		);
 		await this._serial
 			.listenFor(`MOVE_JOINT_BY ${jointNum} COMPLETE`, 20)
