@@ -96,12 +96,12 @@ const float CALIBRATION_SPEEDS[NUM_AXES] = {(5 * STEPS_PER_DEGREE[0]),
                                             (20 * STEPS_PER_DEGREE[3]),
                                             (10 * STEPS_PER_DEGREE[4]),
                                             (10 * STEPS_PER_DEGREE[5])};
-const float JOINT_MAX_SPEEDS[NUM_AXES] = {1e6 / (20 * STEPS_PER_DEGREE[0]),
-                                          1e6 / (30 * STEPS_PER_DEGREE[1]),
-                                          1e6 / (30 * STEPS_PER_DEGREE[2]),
-                                          1e6 / (60 * STEPS_PER_DEGREE[3]),
-                                          1e6 / (60 * STEPS_PER_DEGREE[4]),
-                                          1e6 / (100 * STEPS_PER_DEGREE[5])};
+const float JOINT_MAX_SPEEDS[NUM_AXES] = {(15 * STEPS_PER_DEGREE[0]),
+                                          (15 * STEPS_PER_DEGREE[1]),
+                                          (30 * STEPS_PER_DEGREE[2]),
+                                          (60 * STEPS_PER_DEGREE[3]),
+                                          (60 * STEPS_PER_DEGREE[4]),
+                                          (100 * STEPS_PER_DEGREE[5])};
 const float CALIBRATION_OFFSETS[NUM_AXES] = {0, 0, 0, 0, 0, 0}; // Calibration offsets for each joint
 int currentPosition[NUM_AXES] = {0, 0, 0, 0, 0, 0};
 
@@ -268,11 +268,8 @@ void moveMotorsBresenham(int target[NUM_AXES], float moveDurationSec, float acce
   float cruiseDelay = constrain(avgDelayMicroSec, MIN_SPEED_DELAY, MAX_SPEED_DELAY);
   float startDelay = constrain(initialDelay, cruiseDelay, MAX_SPEED_DELAY);
 
+  Serial.println("start, cruise " + String(startDelay) + ", " + String(cruiseDelay));
   // --- 6. The Main Bresenham Loop with Ramping ---
-  Serial.print("Expected move duration: ");
-  Serial.print(moveDurationSec, 3); // Print with 3 decimal places
-  Serial.println(" seconds");
-
   unsigned long loopStartTime = micros(); // Start timing
 
   float currentDelay = startDelay;
@@ -667,7 +664,7 @@ void handle_MOVE_JOINT(String input)
   }
 
   moveMotorsBresenham(targetSteps, duration, accelDecelPercent);
-  Serial.println("MOVE_JOINT " + parts[0]+" COMPLETE");
+  Serial.println("MOVE_JOINT " + parts[0] + " COMPLETE");
 }
 
 void handle_MOVE_JOINT_BY(String input)
