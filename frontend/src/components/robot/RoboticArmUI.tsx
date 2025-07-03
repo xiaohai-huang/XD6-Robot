@@ -49,6 +49,7 @@ export default function RoboticArmUI() {
 
 	const calibrateAll = async () => {
 		const success = await arm.calibrateAll();
+		await refreshAngles();
 	};
 
 	const stopAll = async () => {

@@ -24,6 +24,8 @@ export const anglesArray = new Derived({
 	deps: [anglesStore],
 });
 
+anglesArray.mount();
+
 type CalibrationStatusType = {
 	J1: CalibrationStatus;
 	J2: CalibrationStatus;
