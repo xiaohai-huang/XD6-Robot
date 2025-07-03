@@ -16,6 +16,7 @@ import {
 	TooltipContent,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { anglesStore } from "@/lib/robot/robot-store";
 import type { JointNum } from "@/lib/robot/robotic-arm";
 import { cn } from "@/lib/utils";
 import { arm } from "./RoboticArmUI";
@@ -93,9 +94,16 @@ export default function JointControlRow({
 		} else {
 			setError(null);
 			if (result.data !== undefined) {
+				anglesStore.setState((prev) => {
+					return { ...prev, [`J${num}`]: result.data };
+				});
 				setDegree(result.data);
 				setIsDirty(result.data !== currentDegree);
 			} else {
+				// empty input
+				anglesStore.setState((prev) => {
+					return { ...prev, [`J${num}`]: currentDegree };
+				});
 				setDegree(currentDegree);
 				setIsDirty(val.trim() !== currentDegree.toString());
 			}
