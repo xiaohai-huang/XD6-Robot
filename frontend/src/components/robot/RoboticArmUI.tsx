@@ -42,6 +42,11 @@ export default function RoboticArmUI() {
 		setConnected(false);
 	};
 
+	const goToZeros = async () => {
+		await arm.rotateAllTo(...([0, 0, 0, 0, 0, 0] as const));
+		await refreshAngles();
+	};
+
 	const rotateAll = async () => {
 		const success = await arm.rotateAllTo(...inputs);
 		await refreshAngles();
@@ -104,6 +109,7 @@ export default function RoboticArmUI() {
 
 				<div className="flex justify-center gap-4">
 					<Button onClick={rotateAll}>Move All</Button>
+					<Button onClick={goToZeros}>Go Zero All</Button>
 					<Button onClick={refreshAngles}>Refresh Angles</Button>
 					<Button onClick={calibrateAll}>Calibrate All</Button>
 				</div>
