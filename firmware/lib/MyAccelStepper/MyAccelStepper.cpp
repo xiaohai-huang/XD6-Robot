@@ -19,17 +19,17 @@ MyAccelStepper::MyAccelStepper(uint8_t stepPin, uint8_t dirPin)
     setMaxSpeed(1);
 }
 
-void MyAccelStepper::setMaxSpeed(float speed)
+void MyAccelStepper::setMaxSpeed(float newMaxSpeed)
 {
-    if (speed < 0.0)
+    if (newMaxSpeed < 0.0)
     {
-        speed = -speed;
+        newMaxSpeed = -newMaxSpeed;
     }
 
-    if (_maxSpeed != speed)
+    if (_maxSpeed != newMaxSpeed)
     {
-        _maxSpeed = speed;
-        _minStepInterval = 1000000.0 / _maxSpeed; // Convert steps per second to microseconds per step
+        _maxSpeed = newMaxSpeed;
+        _minStepInterval = 1000000.0 / _maxSpeed; // Convert steps per <second> to microseconds per <step>
 
         // Recompute _currentStep from current speed and adjust speed if accelerating or cruising
         if (_currentStep > 0)
